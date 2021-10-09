@@ -17,22 +17,45 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       appBar: AppBar(
         title: Text('CallZap'),
       ),
-      body: Center(
-        child: GestureDetector(
-          child: Text(
-            'Contador $counter',
-            style: const TextStyle(fontSize: 40),
+      
+      body: Column(
+        children:[
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: GestureDetector(
+              child: Text(
+                'Contador $counter',
+                style: const TextStyle(fontSize: 40),
+              ),
+              onTap: () {
+                setState(() {
+                  counter++;
+                });
+              },
+            ),
           ),
-          onTap: () {
-            setState(() {
-              counter++;
-            });
-          },
-        ),
+
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: GestureDetector(
+              child: const Text(
+                'Zerar',
+                style: TextStyle(fontSize: 40),
+                ),
+              onTap: () {
+                setState(() {
+                  counter = 0;
+                });
+              },
+            ),
+          )
+        ],
       ),
+
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.message),
         onPressed: () {
