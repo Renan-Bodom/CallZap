@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:callzap/app_controller.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,13 +18,20 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: AppBar(
         title: Text('CallZap'),
+        actions: [Text('Dark:'),
+        Switch(
+          value: AppController.instance.isDartTheme,
+          onChanged: (bool value) {
+            AppController.instance.chargeTheme();
+            print('Botão dark');
+            },
+          ),
+        ],
       ),
-      
       body: Column(
-        children:[
+        children: [
           Align(
             alignment: Alignment.bottomCenter,
             child: GestureDetector(
@@ -38,24 +46,26 @@ class HomePageState extends State<HomePage> {
               },
             ),
           ),
-
           Align(
             alignment: Alignment.bottomCenter,
             child: GestureDetector(
               child: const Text(
                 'Zerar',
                 style: TextStyle(fontSize: 40),
-                ),
+              ),
               onTap: () {
                 setState(() {
                   counter = 0;
                 });
               },
             ),
-          )
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Text('CAMPO TELEFONE!'),
+          ),
         ],
       ),
-
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.message),
         onPressed: () {
