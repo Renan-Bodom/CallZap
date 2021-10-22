@@ -1,7 +1,9 @@
 import 'dart:ui';
 
+import 'package:brasil_fields/brasil_fields.dart';
 import 'package:callzap/app_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -60,9 +62,23 @@ class HomePageState extends State<HomePage> {
               },
             ),
           ),
+
+
+          Align(
+            alignment: Alignment.bottomLeft,
+            child: Text('Digite o número do ZAP:'),
+          ),
+
+
           Align(
             alignment: Alignment.bottomCenter,
-            child: Text('CAMPO TELEFONE!'),
+            child: TextFormField(
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+                TelefoneInputFormatter(),
+              ],
+              keyboardType: TextInputType.number,
+            ),
           ),
         ],
       ),
