@@ -16,18 +16,20 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
   int counter = 0;
+  var _numeroPhone = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('CallZap'),
-        actions: [Text('Dark:'),
-        Switch(
-          value: AppController.instance.isDartTheme,
-          onChanged: (bool value) {
-            AppController.instance.chargeTheme();
-            print('Botão dark');
+        actions: [
+          Text('Dark:'),
+          Switch(
+            value: AppController.instance.isDartTheme,
+            onChanged: (bool value) {
+              AppController.instance.chargeTheme();
+              print('Botão dark');
             },
           ),
         ],
@@ -36,40 +38,15 @@ class HomePageState extends State<HomePage> {
         children: [
           Align(
             alignment: Alignment.bottomCenter,
-            child: GestureDetector(
-              child: Text(
-                'Contador $counter',
-                style: const TextStyle(fontSize: 40),
-              ),
-              onTap: () {
-                setState(() {
-                  counter++;
-                });
-              },
+            child: const Text(
+              'Logo do CallZap \n',
+              style: TextStyle(fontSize: 30),
             ),
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: GestureDetector(
-              child: const Text(
-                'Zerar',
-                style: TextStyle(fontSize: 40),
-              ),
-              onTap: () {
-                setState(() {
-                  counter = 0;
-                });
-              },
-            ),
-          ),
-
-
           Align(
             alignment: Alignment.bottomLeft,
             child: Text('Digite o número do ZAP:'),
           ),
-
-
           Align(
             alignment: Alignment.bottomCenter,
             child: TextFormField(
@@ -78,15 +55,26 @@ class HomePageState extends State<HomePage> {
                 TelefoneInputFormatter(),
               ],
               keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                hintText: 'Número',
+                suffixIcon: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      print('Tentando limpar campo.');
+                    });
+                  },
+                  icon: Icon(Icons.clear),
+                ),
+              ),
             ),
-          ),
+          )
         ],
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.message),
         onPressed: () {
           setState(() {
-            counter++;
+            print('Tentando chamar no ZAP');
           });
         },
       ),
