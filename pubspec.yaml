@@ -1,5 +1,5 @@
 name: callzap
-description: A new Flutter project.
+description: Call on WhatsApp without adding to contacts.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
