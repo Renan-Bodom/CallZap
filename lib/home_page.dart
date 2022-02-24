@@ -16,7 +16,7 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
   int counter = 0;
-  var _numeroPhone = TextEditingController();
+  var _numeroPhone = null;
 
   @override
   Widget build(BuildContext context) {
@@ -25,59 +25,76 @@ class HomePageState extends State<HomePage> {
         title: Text('CallZap'),
         actions: [
           Text('Dark:'),
-          Switch(
-            value: AppController.instance.isDartTheme,
-            onChanged: (bool value) {
-              AppController.instance.chargeTheme();
-              print('Botão dark');
-            },
-          ),
+          keyDark(),
         ],
       ),
-      body: Column(
-        children: [
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: const Text(
-              'Logo do CallZap \n',
-              style: TextStyle(fontSize: 30),
-            ),
-          ),
-          Align(
-            alignment: Alignment.bottomLeft,
-            child: Text('Digite o número do ZAP:'),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: TextFormField(
-              inputFormatters: [
-                FilteringTextInputFormatter.digitsOnly,
-                TelefoneInputFormatter(),
-              ],
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                hintText: 'Número',
-                suffixIcon: IconButton(
-                  onPressed: () {
-                    setState(() {
-                      print('Tentando limpar campo.');
-                    });
-                  },
-                  icon: Icon(Icons.clear),
-                ),
+      body: Container(
+        child: Column(
+          children: [
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: const Text(
+                'Logo do CallZap \n',
+                style: TextStyle(fontSize: 30),
               ),
             ),
-          )
-        ],
+            Align(
+              alignment: Alignment.bottomLeft,
+              child: Text('Digite o número do ZAP:'),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: TextFormField(
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                  TelefoneInputFormatter(),
+                ],
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  hintText: 'Número',
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        print('Tentando limpar campo.');
+                      });
+                    },
+                    icon: Icon(Icons.clear),
+                  ),
+                ),
+                onSaved: (numero) {
+                  _numeroPhone = numero;
+                },
+              ),
+            )
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.message),
         onPressed: () {
           setState(() {
             print('Tentando chamar no ZAP');
+            print(_numeroPhone);
           });
         },
       ),
+    );
+  }
+}
+
+
+
+class keyDark extends StatelessWidget {
+  const keyDark({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Switch(
+      value: AppController.instance.isDartTheme,
+      onChanged: (bool value) {
+        AppController.instance.chargeTheme();
+        print('Botão dark');
+      },
     );
   }
 }
