@@ -16,7 +16,8 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
   int counter = 0;
-  var _numeroPhone = null;
+  String _numeroPhone = '';
+  String tentandoAbrir = '';
 
   @override
   Widget build(BuildContext context) {
@@ -29,43 +30,66 @@ class HomePageState extends State<HomePage> {
         ],
       ),
       body: Container(
+        width: double.infinity,
+        height: double.infinity,
         child: Column(
           children: [
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: const Text(
-                'Logo do CallZap \n',
-                style: TextStyle(fontSize: 30),
-              ),
+            Container(
+              height: 25,
+            ),
+            Text(
+              'Logo do CallZap',
+              style: TextStyle(fontSize: 30),
+            ),
+            Container(
+              height: 50,
             ),
             Align(
-              alignment: Alignment.bottomLeft,
+              alignment: Alignment.topCenter,
               child: Text('Digite o número do ZAP:'),
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: TextFormField(
-                inputFormatters: [
-                  FilteringTextInputFormatter.digitsOnly,
-                  TelefoneInputFormatter(),
-                ],
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  hintText: 'Número',
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        print('Tentando limpar campo.');
-                      });
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 170,
+                  child: TextFormField(
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                      TelefoneInputFormatter(),
+                    ],
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      hintText: 'Número',
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            print('Tentando limpar campo.');
+                          });
+                        },
+                        icon: Icon(Icons.clear),
+                      ),
+                    ),
+                    onChanged: (numero) {
+                      _numeroPhone = numero;
+                      tentandoAbrir = 'Tetando chamar no ZAP: ';
                     },
-                    icon: Icon(Icons.clear),
                   ),
                 ),
-                onSaved: (numero) {
-                  _numeroPhone = numero;
-                },
-              ),
-            )
+                GestureDetector(
+                  child: Text('Enviar'),
+                  onTap: () {
+                    setState(() {
+                      print('Tentando enviar o campo');
+                    });
+                  },
+                ),
+              ],
+            ),
+            Container(
+              height: 100,
+            ),
+            Text('$tentandoAbrir' + '$_numeroPhone')
           ],
         ),
       ),
@@ -73,16 +97,13 @@ class HomePageState extends State<HomePage> {
         child: const Icon(Icons.message),
         onPressed: () {
           setState(() {
-            print('Tentando chamar no ZAP');
-            print(_numeroPhone);
+            print('$tentandoAbrir' + _numeroPhone);
           });
         },
       ),
     );
   }
 }
-
-
 
 class keyDark extends StatelessWidget {
   const keyDark({Key? key}) : super(key: key);
