@@ -97,7 +97,10 @@ class HomePageState extends State<HomePage> {
         child: const Icon(Icons.message),
         onPressed: () {
           setState(() {
-            print('$tentandoAbrir' + _numeroPhone);
+            String apenasNumero =
+                _numeroPhone.replaceAll(new RegExp(r'[^0-9]'), '');
+
+            print('Link Zap: ' + 'wa.me/055' + apenasNumero);
           });
         },
       ),
