@@ -4,6 +4,7 @@ import 'package:brasil_fields/brasil_fields.dart';
 import 'package:callzap/app_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -96,11 +97,14 @@ class HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.message),
         onPressed: () {
-          setState(() {
+          setState(() async {
             String apenasNumero =
                 _numeroPhone.replaceAll(new RegExp(r'[^0-9]'), '');
 
             print('Link Zap: ' + 'wa.me/055' + apenasNumero);
+
+            await launch('wa.me/055' + apenasNumero);
+
           });
         },
       ),
