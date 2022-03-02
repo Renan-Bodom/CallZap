@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'dart:io';
 
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:callzap/app_controller.dart';
@@ -19,6 +20,20 @@ class HomePageState extends State<HomePage> {
   int counter = 0;
   String _numeroPhone = '';
   String tentandoAbrir = '';
+
+  void whatsAppOpen(numeroZap, mensagemZAP) async {
+    String linkZAP = "";
+
+    if (Platform.isIOS) {
+      linkZAP =
+          "https://wa.me/" + numeroZap + "?text=${Uri.parse(mensagemZAP)}";
+    } else {
+      linkZAP =
+          "whatsapp://send?phone=055" + numeroZap + "&text=" + mensagemZAP;
+    }
+
+    await launch(linkZAP);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,15 +112,16 @@ class HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.message),
         onPressed: () {
-          setState(() async {
-            String apenasNumero =
-                _numeroPhone.replaceAll(new RegExp(r'[^0-9]'), '');
+          String apenasNumero =
+              _numeroPhone.replaceAll(new RegExp(r'[^0-9]'), '');
+          String mensagemZAP = "Olá, ";
 
-            print('Link Zap: ' + 'wa.me/055' + apenasNumero);
-
-            await launch('wa.me/055' + apenasNumero);
-
-          });
+          whatsAppOpen(apenasNumero, mensagemZAP);
+          setState(
+            () {
+              //Atualiza a tela com tentativa de chamada!
+            },
+          );
         },
       ),
     );
