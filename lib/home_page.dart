@@ -35,6 +35,12 @@ class HomePageState extends State<HomePage> {
     await launch(linkZAP);
   }
 
+  final textFormField = TextEditingController();
+
+  void clearText() {
+    textFormField.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,12 +81,14 @@ class HomePageState extends State<HomePage> {
                       TelefoneInputFormatter(),
                     ],
                     keyboardType: TextInputType.number,
+                    controller: textFormField,
                     decoration: InputDecoration(
                       hintText: 'Número',
                       suffixIcon: IconButton(
                         onPressed: () {
+                          clearText();
                           setState(() {
-                            print('Tentando limpar campo.');
+                            tentandoAbrir = 'Tentando limpar campo: ';
                           });
                         },
                         icon: Icon(Icons.clear),
@@ -96,7 +104,7 @@ class HomePageState extends State<HomePage> {
                   child: Text('Enviar'),
                   onTap: () {
                     setState(() {
-                      print('Tentando enviar o campo');
+                      tentandoAbrir = 'Tentando enviar número: ';
                     });
                   },
                 ),
